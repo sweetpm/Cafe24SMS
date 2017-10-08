@@ -41,6 +41,13 @@ exports.send = function (receiverPhone, message) {
     nointeractive: encodeBase64('')                                 // 사용할 경우 1 (성공시 alert를 사용하지 않게 함)
   };
 
+  if (message.length > 80) {
+    parameters.subject = encodeBase64('');
+    parameters.smsType = encodeBase64('L');
+  } else {
+    parameters.smsType = encodeBase64('S');
+  }
+  
   // Validate parameters
   if (!(parameters && parameters.user_id && parameters.secure && parameters.msg && parameters.rphone)) {
     deferred.reject('Invalid parameters.');
