@@ -2,13 +2,22 @@
   "name": "cafe24sms",
   "version": "1.0.0",
   "description": "SMS sending module in Korea using Cafe24 SMS Hosting service.",
-  "main": "sendsms.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "supervisor ./bin/www"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sweetpm/Cafe24SMS.git"
   },
   "author": "Daeyeol Ryu <dy.ryu@nangman.in>",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.1",
+    "q": "^1.5.0",
     "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "supervisor": "^0.12.0"
   }
 }
