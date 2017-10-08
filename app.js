@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/', require('./routes/sms'));
+app.use('/api/sms', require('./routes/sms'));
 
 var port = process.env.PORT || 8051;
 
