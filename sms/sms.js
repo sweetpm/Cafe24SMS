@@ -20,6 +20,9 @@ exports.send = function (receiverPhone, message) {
     receiverPhone = undefined;
   }
 
+  // Process new line
+  message = message.replace('\\n', '\r\n');
+  
   var deferred = q.defer();
   var parameters = {
     user_id: encodeBase64(config.cafe24SMS.userId),                 // SMS 아이디
