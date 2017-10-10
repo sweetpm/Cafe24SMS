@@ -10,9 +10,10 @@ router.get('/', (req, res) => {
 
 router.post('/send', (req, res) => {
   var receiverPhone = req.body.receiverPhone;
+  var title = req.body.title;
   var message = req.body.message;
 
-  sms.send(receiverPhone, message)
+  sms.send(receiverPhone, title, message)
   .then(function (result) {
     console.log(result);
     return res.status(200).send();

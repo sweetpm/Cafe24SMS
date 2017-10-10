@@ -8,7 +8,7 @@ var encodeBase64 = function (str) {
   return new Buffer(str).toString('base64');
 };
 
-exports.send = function (receiverPhone, message) {
+exports.send = function (receiverPhone, title, message) {
   // Make receiverPhone format to fit Cafe24 SMS hosting service.
   if ((/^\d{3}-\d{3,4}-\d{4}$/).test(receiverPhone)) {
     receiverPhone = receiverPhone;
@@ -19,11 +19,17 @@ exports.send = function (receiverPhone, message) {
   } else {
     receiverPhone = undefined;
   }
+  
+  if (!title) {
+    title = '';
+  }
+  title = title.replace('\\n', '\r\n');
 
-  // Process new line
+  if (!message) {
+    message = '';
+  }
   message = message.replace('\\n', '\r\n');
   
-  var deferred = q.defer();
   var parameters = {
     user_id: encodeBase64(config.cafe24SMS.userId),                 // SMS 아이디
     secure: encodeBase64(config.cafe24SMS.secure),                  // 인증키
@@ -45,11 +51,13 @@ exports.send = function (receiverPhone, message) {
   };
 
   if (message.length > 80) {
-    parameters.subject = encodeBase64('');
+    parameters.subject = encodeBase64(title);
     parameters.smsType = encodeBase64('L');
   } else {
     parameters.smsType = encodeBase64('S');
   }
+
+  var deferred = q.defer();
   
   // Validate parameters
   if (!(parameters && parameters.user_id && parameters.secure && parameters.msg && parameters.rphone)) {
